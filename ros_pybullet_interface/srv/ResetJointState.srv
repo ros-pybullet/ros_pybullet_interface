@@ -1,5 +1,0 @@
-sensor_msgs/JointState joint_state
-float64 duration
----
-string message
-bool success

@@ -1,6 +1,0 @@
-name: "torus_deform"
-
-loadURDF:
-  fileName: "{rpbi_examples}/configs/soft_body/torus_deform.urdf"
-  basePosition: [0, 0, 2]  #[0, -0.6, 2]  
-  flags: "URDF_USE_SELF_COLLISION"

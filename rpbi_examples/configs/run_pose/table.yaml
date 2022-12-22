@@ -1,8 +1,0 @@
-name: "table"
-
-createVisualShape:
-  shapeType: "GEOM_BOX"
-  halfExtents: [0.1, 0.1, 0.1]
-
-object_tf:
-  tf_id: "rpbi/table"

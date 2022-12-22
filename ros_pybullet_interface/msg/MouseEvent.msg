@@ -1,8 +1,0 @@
-Header header
-uint8 event_type
-string event_type_str
-float64 mouse_pos_x
-float64 mouse_pos_y
-uint8 button_index
-uint8 button_state
-uint8 button_state_str

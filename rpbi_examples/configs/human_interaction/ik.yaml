@@ -1,5 +1,0 @@
-robot_name: "kuka_lwr"
-link_name: "end_effector_sponge"
-
-parent_frame_id: "rpbi/kuka_lwr/lwr_arm_0_link"
-child_frame_id: "teleop_target"

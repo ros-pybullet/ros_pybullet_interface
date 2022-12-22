@@ -1,4 +1,0 @@
-ros_pybullet_interface/PybulletObject pybullet_object
----
-bool success
-string message

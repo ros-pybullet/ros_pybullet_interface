@@ -1,8 +1,0 @@
-name: "whiteboard"
-
-createVisualShape:
-  shapeType: "GEOM_BOX"
-  halfExtents: [0.3, 0.2, 0.025]
-
-object_tf:
-  tf_id: "rpbi/whiteboard"

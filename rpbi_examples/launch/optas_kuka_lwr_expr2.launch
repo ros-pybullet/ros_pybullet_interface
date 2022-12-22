@@ -1,7 +1,0 @@
-<launch>
-  
-  <node pkg="ros_pybullet_interface" name="ros_pybullet_interface_node" type="ros_pybullet_interface_node.py">
-    <rosparam param="config" file="$(find rpbi_examples)/configs/optas_kuka_lwr_expr2/config.yaml"/>
-  </node>
-
-</launch>

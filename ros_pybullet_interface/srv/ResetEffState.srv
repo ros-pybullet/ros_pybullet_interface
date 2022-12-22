@@ -1,5 +1,0 @@
-ros_pybullet_interface/CalculateInverseKinematicsProblem problem
-float64 duration
----
-string message
-bool success

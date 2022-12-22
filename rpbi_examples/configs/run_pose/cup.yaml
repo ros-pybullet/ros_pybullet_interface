@@ -1,8 +1,0 @@
-name: "cup"
-
-loadURDF:
-  fileName: "{rpbi_examples}/configs/run_pose/cup.urdf"
-  basePosition: [0.4, 0.4, 0.4]
-  # baseOrientation: [0.        , 0.70710678, 0.        , 0.70710678]
-  useMaximalCoordinates: true
-  useFixedBase: 1  
