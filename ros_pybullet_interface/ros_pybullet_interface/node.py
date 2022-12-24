@@ -40,8 +40,10 @@ class RPBIBaseNode(Node):
         config_filename = self.get_parameter('config_filename').get_parameter_value().string_value
 
         # Load configuration
-        with open(config_filename, 'r') as config:
-            self.config = yaml.load(config, Loader=yaml.FullLoader)
+        self.config = {}
+        if config_filename:
+            with open(config_filename, 'r') as config:
+                self.config = yaml.load(config, Loader=yaml.FullLoader)
 
         # Setup PyBullet connection configuration
         connect_config = {}
