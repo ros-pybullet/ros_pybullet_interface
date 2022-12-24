@@ -26,7 +26,7 @@ class ROSPyBulletInterfaceNode(Node):
     def __init__(self):
 
         # Initialize ROS
-        super().__init__('rpbi_node')
+        super().__init__('rpbi_node', server_node=True)
 
         # Setup class attributes
         self.active = False

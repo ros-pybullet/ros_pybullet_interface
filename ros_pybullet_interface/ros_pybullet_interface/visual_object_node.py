@@ -4,6 +4,9 @@ from .node import RPBIBaseNode, main_func
 class VisualObjectNode(RPBIBaseNode):
 
 
+    """This object should be used to simply visualize objects in PyBullet."""
+
+
     def __init__(self):
         """Node constructor"""
 
@@ -19,11 +22,12 @@ class VisualObjectNode(RPBIBaseNode):
 
         # Start timer
         if self.frame_id:
-            self.create_timer(self.frame_listener_frequency, self.frame_listener_timer_callback)
+            dt = 1.0/float(self.frame_listener_frequency)
+            self.create_timer(dt, self.frame_listener_timer_callback)
 
 
     # ----------------------------------
-    # Properties
+    # Properties/configuration
 
 
     @property
