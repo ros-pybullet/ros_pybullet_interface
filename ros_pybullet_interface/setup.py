@@ -22,6 +22,7 @@ setup(
         'console_scripts': [
             'rpbi_node = ros_pybullet_interface.rpbi_node:main',
             'dynamic_object_node = ros_pybullet_interface.dynamic_object_node:main',
+            'visual_object_node = ros_pybullet_interface.visual_object_node:main',
         ],
     },
 )
