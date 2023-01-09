@@ -80,9 +80,10 @@ class Joint:
     def ft_sensor_enabled(self):
         return self.ft_pub_key is not None
 
-    def publish_wrench(self, joint_reaction_forces):
+    def publish_wrench(self, joint_reaction_forces, frame_id):
         msg = WrenchStamped()
         msg.header.stamp = self.pb_obj.node.time_now()
+        msg.header.frame_id = frame_id
         msg.wrench.force.x = joint_reaction_forces[0]
         msg.wrench.force.y = joint_reaction_forces[1]
         msg.wrench.force.z = joint_reaction_forces[2]
@@ -270,7 +271,7 @@ class Joints(list):
         # Publish ft sensor states
         for joint, joint_state in zip(self, joint_states):
             if joint.ft_sensor_enabled:
-                joint.publish_wrench(joint_state[2])
+                joint.publish_wrench(joint_state[2], joint.linkName)
 
         # Publish joint state message
         self.pb_obj.pubs['joint_state'].publish(self.pack_joint_state_msg(joint_states))
