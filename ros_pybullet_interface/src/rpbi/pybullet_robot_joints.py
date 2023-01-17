@@ -84,12 +84,12 @@ class Joint:
         msg = WrenchStamped()
         msg.header.stamp = self.pb_obj.node.time_now()
         msg.header.frame_id = frame_id
-        msg.wrench.force.x = joint_reaction_forces[0]
-        msg.wrench.force.y = joint_reaction_forces[1]
-        msg.wrench.force.z = joint_reaction_forces[2]
-        msg.wrench.torque.x = joint_reaction_forces[3]
-        msg.wrench.torque.y = joint_reaction_forces[4]
-        msg.wrench.torque.z = joint_reaction_forces[5]
+        msg.wrench.force.x = -joint_reaction_forces[0]
+        msg.wrench.force.y = -joint_reaction_forces[1]
+        msg.wrench.force.z = -joint_reaction_forces[2]
+        msg.wrench.torque.x = -joint_reaction_forces[3]
+        msg.wrench.torque.y = -joint_reaction_forces[4]
+        msg.wrench.torque.z = -joint_reaction_forces[5]
         self.pb_obj.pubs[self.ft_pub_key].publish(msg)
 
 class Joints(list):
