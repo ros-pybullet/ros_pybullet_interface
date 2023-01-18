@@ -4,6 +4,7 @@ from math import radians
 from ros_pybullet_interface.msg import JointInfo
 from sensor_msgs.msg import JointState
 from geometry_msgs.msg import WrenchStamped
+from std_srvs.srv import Empty
 
 class Joint:
 
@@ -37,6 +38,10 @@ class Joint:
         self.parentFramePos = self.info[14]
         self.parentFrameOrn = self.info[15]
         self.parentIndex = self.info[16]
+
+        # wrench offset
+        self.wrench_offset = [0., 0., 0., 0., 0., 0.]
+        self.wrench_measured = [0., 0., 0., 0., 0., 0.]
 
         # Parse the joint information as a ros_pybullet_interface/JointInfo ROS message
         self.joint_info_msg = JointInfo(
@@ -75,22 +80,40 @@ class Joint:
         self.pb_obj.pb.enableJointForceTorqueSensor(self.pb_obj.body_unique_id, self.jointIndex, enableSensor=1)
         self.ft_pub_key = f'{self.pb_obj.name}_{self.jointName}_ft_sensor'
         self.pb_obj.pubs[self.ft_pub_key] = self.pb_obj.node.Publisher(f'rpbi/{self.pb_obj.name}/{self.jointName}/ft_sensor', WrenchStamped, queue_size=10)
+        self.pb_obj.srvs[self.ft_pub_key] = self.pb_obj.node.Service(f'rpbi/{self.pb_obj.name}/{self.jointName}/ft_sensor', Empty, self.zero_wrench)
 
     @property
     def ft_sensor_enabled(self):
         return self.ft_pub_key is not None
 
     def publish_wrench(self, joint_reaction_forces, frame_id):
+        self.wrench_measured[0] = -joint_reaction_forces[0]
+        self.wrench_measured[1] = -joint_reaction_forces[1]
+        self.wrench_measured[2] = -joint_reaction_forces[2]
+        self.wrench_measured[3] = -joint_reaction_forces[3]
+        self.wrench_measured[4] = -joint_reaction_forces[4]
+        self.wrench_measured[5] = -joint_reaction_forces[5]
+
+        # set and publish wrench
         msg = WrenchStamped()
         msg.header.stamp = self.pb_obj.node.time_now()
         msg.header.frame_id = frame_id
-        msg.wrench.force.x = -joint_reaction_forces[0]
-        msg.wrench.force.y = -joint_reaction_forces[1]
-        msg.wrench.force.z = -joint_reaction_forces[2]
-        msg.wrench.torque.x = -joint_reaction_forces[3]
-        msg.wrench.torque.y = -joint_reaction_forces[4]
-        msg.wrench.torque.z = -joint_reaction_forces[5]
+        msg.wrench.force.x = self.wrench_measured[0] - self.wrench_offset[0]
+        msg.wrench.force.y = self.wrench_measured[1] - self.wrench_offset[1]
+        msg.wrench.force.z = self.wrench_measured[2] - self.wrench_offset[2]
+        msg.wrench.torque.x = self.wrench_measured[3] - self.wrench_offset[3]
+        msg.wrench.torque.y = self.wrench_measured[4] - self.wrench_offset[4]
+        msg.wrench.torque.z = self.wrench_measured[5] - self.wrench_offset[5]
         self.pb_obj.pubs[self.ft_pub_key].publish(msg)
+
+    def zero_wrench(self, req):
+        self.wrench_offset[0] = self.wrench_measured[0]
+        self.wrench_offset[1] = self.wrench_measured[1]
+        self.wrench_offset[2] = self.wrench_measured[2]
+        self.wrench_offset[3] = self.wrench_measured[3]
+        self.wrench_offset[4] = self.wrench_measured[4]
+        self.wrench_offset[5] = self.wrench_measured[5]
+        return []
 
 class Joints(list):
 
@@ -129,7 +152,6 @@ class Joints(list):
         # NOTE: if robot is visual then this data will not be published, even if this is set in config file
         if not self.pb_obj.is_visual_robot:
             for name in self.enabled_joint_force_torque_sensors:
-
                 self[name].enable_ft_sensor()
 
         # Setup target joint state subscriber
