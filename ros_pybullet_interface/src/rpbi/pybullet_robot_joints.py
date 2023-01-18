@@ -83,7 +83,7 @@ class Joint:
         self.pb_obj.pb.enableJointForceTorqueSensor(self.pb_obj.body_unique_id, self.jointIndex, enableSensor=1)
         self.ft_pub_key = f'{self.pb_obj.name}_{self.jointName}_ft_sensor'
         self.pb_obj.pubs[self.ft_pub_key] = self.pb_obj.node.Publisher(f'rpbi/{self.pb_obj.name}/{self.jointName}/ft_sensor', WrenchStamped, queue_size=10)
-        self.pb_obj.srvs[self.ft_pub_key] = self.pb_obj.node.Service(f'rpbi/{self.pb_obj.name}/{self.jointName}/ft_sensor', Empty, self.zero_wrench)
+        self.pb_obj.srvs[self.ft_pub_key] = self.pb_obj.node.Service(f'rpbi/{self.pb_obj.name}/{self.jointName}/Zero', Empty, self.zero_wrench)
 
     @property
     def ft_sensor_enabled(self):
