@@ -4,6 +4,7 @@ from math import radians
 from ros_pybullet_interface.msg import JointInfo
 from sensor_msgs.msg import JointState
 from geometry_msgs.msg import WrenchStamped
+from std_srvs.srv import Empty
 
 class Joint:
 
@@ -37,6 +38,13 @@ class Joint:
         self.parentFramePos = self.info[14]
         self.parentFrameOrn = self.info[15]
         self.parentIndex = self.info[16]
+
+        # wrench offset
+        self.setzero = False
+        self.setzero_cnt = 0
+        self.total_setzero_cnt = 100
+        self.wrench_offset = [0., 0., 0., 0., 0., 0.]
+        self.wrench_measured = [0., 0., 0., 0., 0., 0.]
 
         # Parse the joint information as a ros_pybullet_interface/JointInfo ROS message
         self.joint_info_msg = JointInfo(
@@ -75,21 +83,43 @@ class Joint:
         self.pb_obj.pb.enableJointForceTorqueSensor(self.pb_obj.body_unique_id, self.jointIndex, enableSensor=1)
         self.ft_pub_key = f'{self.pb_obj.name}_{self.jointName}_ft_sensor'
         self.pb_obj.pubs[self.ft_pub_key] = self.pb_obj.node.Publisher(f'rpbi/{self.pb_obj.name}/{self.jointName}/ft_sensor', WrenchStamped, queue_size=10)
+        self.pb_obj.srvs[self.ft_pub_key] = self.pb_obj.node.Service(f'rpbi/{self.pb_obj.name}/{self.jointName}/Zero', Empty, self.zero_wrench)
 
     @property
     def ft_sensor_enabled(self):
         return self.ft_pub_key is not None
 
-    def publish_wrench(self, joint_reaction_forces):
-        msg = WrenchStamped()
-        msg.header.stamp = self.pb_obj.node.time_now()
-        msg.wrench.force.x = joint_reaction_forces[0]
-        msg.wrench.force.y = joint_reaction_forces[1]
-        msg.wrench.force.z = joint_reaction_forces[2]
-        msg.wrench.torque.x = joint_reaction_forces[3]
-        msg.wrench.torque.y = joint_reaction_forces[4]
-        msg.wrench.torque.z = joint_reaction_forces[5]
-        self.pb_obj.pubs[self.ft_pub_key].publish(msg)
+    def publish_wrench(self, joint_reaction_forces, frame_id):
+
+        wrench_measured = [-wrench for wrench in joint_reaction_forces]
+
+        if self.setzero:
+            if self.setzero_cnt == 0:
+                self.wrench_offset = [wrench for wrench in wrench_measured]
+                self.setzero_cnt += 1
+            elif self.setzero_cnt < self.total_setzero_cnt:
+                self.wrench_offset = [offset + wrench for offset,wrench in zip(self.wrench_offset,wrench_measured)]
+                self.setzero_cnt += 1
+            else:
+                self.wrench_offset = [offset/self.total_setzero_cnt for offset in self.wrench_offset]
+                self.setzero_cnt = 0
+                self.setzero = False
+        else:
+            # set and publish wrench
+            msg = WrenchStamped()
+            msg.header.stamp = self.pb_obj.node.time_now()
+            msg.header.frame_id = frame_id
+            msg.wrench.force.x = wrench_measured[0] - self.wrench_offset[0]
+            msg.wrench.force.y = wrench_measured[1] - self.wrench_offset[1]
+            msg.wrench.force.z = wrench_measured[2] - self.wrench_offset[2]
+            msg.wrench.torque.x = wrench_measured[3] - self.wrench_offset[3]
+            msg.wrench.torque.y = wrench_measured[4] - self.wrench_offset[4]
+            msg.wrench.torque.z = wrench_measured[5] - self.wrench_offset[5]
+            self.pb_obj.pubs[self.ft_pub_key].publish(msg)
+
+    def zero_wrench(self, req):
+        self.setzero = True
+        return []
 
 class Joints(list):
 
@@ -128,7 +158,6 @@ class Joints(list):
         # NOTE: if robot is visual then this data will not be published, even if this is set in config file
         if not self.pb_obj.is_visual_robot:
             for name in self.enabled_joint_force_torque_sensors:
-
                 self[name].enable_ft_sensor()
 
         # Setup target joint state subscriber
@@ -270,7 +299,7 @@ class Joints(list):
         # Publish ft sensor states
         for joint, joint_state in zip(self, joint_states):
             if joint.ft_sensor_enabled:
-                joint.publish_wrench(joint_state[2])
+                joint.publish_wrench(joint_state[2], joint.linkName)
 
         # Publish joint state message
         self.pb_obj.pubs['joint_state'].publish(self.pack_joint_state_msg(joint_states))
