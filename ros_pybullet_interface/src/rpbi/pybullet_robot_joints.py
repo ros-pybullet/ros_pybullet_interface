@@ -40,6 +40,9 @@ class Joint:
         self.parentIndex = self.info[16]
 
         # wrench offset
+        self.setzero = False
+        self.setzero_cnt = 0
+        self.total_setzero_cnt = 100
         self.wrench_offset = [0., 0., 0., 0., 0., 0.]
         self.wrench_measured = [0., 0., 0., 0., 0., 0.]
 
@@ -87,32 +90,35 @@ class Joint:
         return self.ft_pub_key is not None
 
     def publish_wrench(self, joint_reaction_forces, frame_id):
-        self.wrench_measured[0] = -joint_reaction_forces[0]
-        self.wrench_measured[1] = -joint_reaction_forces[1]
-        self.wrench_measured[2] = -joint_reaction_forces[2]
-        self.wrench_measured[3] = -joint_reaction_forces[3]
-        self.wrench_measured[4] = -joint_reaction_forces[4]
-        self.wrench_measured[5] = -joint_reaction_forces[5]
 
-        # set and publish wrench
-        msg = WrenchStamped()
-        msg.header.stamp = self.pb_obj.node.time_now()
-        msg.header.frame_id = frame_id
-        msg.wrench.force.x = self.wrench_measured[0] - self.wrench_offset[0]
-        msg.wrench.force.y = self.wrench_measured[1] - self.wrench_offset[1]
-        msg.wrench.force.z = self.wrench_measured[2] - self.wrench_offset[2]
-        msg.wrench.torque.x = self.wrench_measured[3] - self.wrench_offset[3]
-        msg.wrench.torque.y = self.wrench_measured[4] - self.wrench_offset[4]
-        msg.wrench.torque.z = self.wrench_measured[5] - self.wrench_offset[5]
-        self.pb_obj.pubs[self.ft_pub_key].publish(msg)
+        wrench_measured = [-wrench for wrench in joint_reaction_forces]
+
+        if self.setzero:
+            if self.setzero_cnt == 0:
+                self.wrench_offset = [wrench for wrench in wrench_measured]
+                self.setzero_cnt += 1
+            elif self.setzero_cnt < self.total_setzero_cnt:
+                self.wrench_offset = [offset + wrench for offset,wrench in zip(self.wrench_offset,wrench_measured)]
+                self.setzero_cnt += 1
+            else:
+                self.wrench_offset = [offset/self.total_setzero_cnt for offset in self.wrench_offset]
+                self.setzero_cnt = 0
+                self.setzero = False
+        else:
+            # set and publish wrench
+            msg = WrenchStamped()
+            msg.header.stamp = self.pb_obj.node.time_now()
+            msg.header.frame_id = frame_id
+            msg.wrench.force.x = wrench_measured[0] - self.wrench_offset[0]
+            msg.wrench.force.y = wrench_measured[1] - self.wrench_offset[1]
+            msg.wrench.force.z = wrench_measured[2] - self.wrench_offset[2]
+            msg.wrench.torque.x = wrench_measured[3] - self.wrench_offset[3]
+            msg.wrench.torque.y = wrench_measured[4] - self.wrench_offset[4]
+            msg.wrench.torque.z = wrench_measured[5] - self.wrench_offset[5]
+            self.pb_obj.pubs[self.ft_pub_key].publish(msg)
 
     def zero_wrench(self, req):
-        self.wrench_offset[0] = self.wrench_measured[0]
-        self.wrench_offset[1] = self.wrench_measured[1]
-        self.wrench_offset[2] = self.wrench_measured[2]
-        self.wrench_offset[3] = self.wrench_measured[3]
-        self.wrench_offset[4] = self.wrench_measured[4]
-        self.wrench_offset[5] = self.wrench_measured[5]
+        self.setzero = True
         return []
 
 class Joints(list):
