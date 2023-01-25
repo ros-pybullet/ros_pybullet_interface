@@ -206,17 +206,14 @@ class Node(RosNode):
 
         object_dynamics_msg = ObjectDynamics()
         object_dynamics_msg.mass = object_dynamics['mass']
-        object_dynamics_msg.lateral_friction = object_dynamics['lateral friction']
-        object_dynamics_msg.local_inertia_diagonal = object_dynamics['local inertia diagonal']
-        object_dynamics_msg.local_inertia_pos = object_dynamics['local inertia pos']
-        object_dynamics_msg.local_inertia_orn = object_dynamics['local inertia orn']
+        object_dynamics_msg.lateral_friction = object_dynamics['lateralFriction']
+        object_dynamics_msg.local_inertia_diagonal = object_dynamics['localInertiaDiagonal']
         object_dynamics_msg.restitution = object_dynamics['restitution']
-        object_dynamics_msg.rolling_friction = object_dynamics['rolling friction']
-        object_dynamics_msg.spinning_friction = object_dynamics['spinning friction']
-        object_dynamics_msg.contact_damping = object_dynamics['contact damping']
-        object_dynamics_msg.contact_stiffness = object_dynamics['contact stiffness']
-        object_dynamics_msg.body_type = object_dynamics['body type']
-        object_dynamics_msg.collision_margin = object_dynamics['collision margin']
+        object_dynamics_msg.rolling_friction = object_dynamics['rollingFriction']
+        object_dynamics_msg.spinning_friction = object_dynamics['spinningFriction']
+        object_dynamics_msg.contact_damping = object_dynamics['contactDamping']
+        object_dynamics_msg.contact_stiffness = object_dynamics['contactStiffness']
+        object_dynamics_msg.collision_margin = object_dynamics['collisionMargin']
 
         return GetObjectDynamicsResponse(success=success, message=message, object_dynamics=object_dynamics_msg)
 

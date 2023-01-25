@@ -76,17 +76,14 @@ class PybulletObject(ABC):
         dynamics_info = self.pb.getDynamicsInfo(**config)
         dynamics_dict = {
             "mass": dynamics_info[0],
-            "lateral friction": dynamics_info[1],
-            "local inertia diagonal": dynamics_info[2],
-            "local inertia pos": dynamics_info[3],
-            "local inertia orn": dynamics_info[4],
+            "lateralFriction": dynamics_info[1],
+            "localInertiaDiagonal": dynamics_info[2],
             "restitution": dynamics_info[5],
-            "rolling friction": dynamics_info[6],
-            "spinning friction": dynamics_info[7],
-            "contact damping": dynamics_info[8],
-            "contact stiffness": dynamics_info[9],
-            "body type": dynamics_info[10],
-            "collision margin": dynamics_info[11]
+            "rollingFriction": dynamics_info[6],
+            "spinningFriction": dynamics_info[7],
+            "contactDamping": dynamics_info[8],
+            "contactStiffness": dynamics_info[9],
+            "collisionMargin": dynamics_info[11]
         }
         return dynamics_dict
 
