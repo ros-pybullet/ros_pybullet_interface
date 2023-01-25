@@ -1,0 +1,5 @@
+string object_name
+---
+bool success
+string message
+ros_pybullet_interface/ObjectDynamics object_dynamics

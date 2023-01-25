@@ -68,6 +68,28 @@ class PybulletObject(ABC):
             config['activationState'] = getattr(self.pb, config['activationState'])
         self.pb.changeDynamics(**config)
 
+    def get_dynamics(self, link_index=-1):
+        """Exposes changeDynamics."""
+        config = {}
+        config['bodyUniqueId'] = self.body_unique_id
+        config['linkIndex'] = link_index
+        dynamics_info = self.pb.getDynamicsInfo(**config)
+        dynamics_dict = {
+            "mass": dynamics_info[0],
+            "lateral friction": dynamics_info[1],
+            "local inertia diagonal": dynamics_info[2],
+            "local inertia pos": dynamics_info[3],
+            "local inertia orn": dynamics_info[4],
+            "restitution": dynamics_info[5],
+            "rolling friction": dynamics_info[6],
+            "spinning friction": dynamics_info[7],
+            "contact damping": dynamics_info[8],
+            "contact stiffness": dynamics_info[9],
+            "body type": dynamics_info[10],
+            "collision margin": dynamics_info[11]
+        }
+        return dynamics_dict
+
 
     def destroy(self):
         """Removes the object from Pybullet and closes any communication with ROS."""
@@ -84,7 +106,6 @@ class PybulletObject(ABC):
 
         # Remove object from pybullet
         self.pb.removeBody(self.body_unique_id)
-
 
 class PybulletObjectArray:
 
