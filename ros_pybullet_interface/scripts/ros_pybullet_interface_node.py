@@ -18,6 +18,7 @@ from ros_pybullet_interface.msg import PybulletObject
 from ros_pybullet_interface.msg import ObjectDynamics
 from ros_pybullet_interface.srv import AddPybulletObject, AddPybulletObjectResponse
 from ros_pybullet_interface.srv import GetObjectDynamics, GetObjectDynamicsResponse
+from ros_pybullet_interface.srv import ChangeObjectDynamics, ChangeObjectDynamicsResponse
 
 from custom_ros_tools.config import load_config, load_configs
 from cob_srvs.srv import SetString, SetStringResponse
@@ -84,6 +85,7 @@ class Node(RosNode):
         self.Service('rpbi/add_pybullet_object', AddPybulletObject, self.service_add_pybullet_object)
         self.Service('rpbi/remove_pybullet_object', SetString, self.service_remove_pybullet_object)
         self.Service('rpbi/get_pybullet_object_dynamics', GetObjectDynamics, self.service_get_pybullet_object_dynamics)
+        self.Service('rpbi/change_pybullet_object_dynamics', ChangeObjectDynamics, self.service_change_pybullet_object_dynamics)
 
         # Start pybullet
         if self.pybullet_instance.start_pybullet_after_initialization:
@@ -217,6 +219,49 @@ class Node(RosNode):
         object_dynamics_msg.collision_margin = object_dynamics['collision margin']
 
         return GetObjectDynamicsResponse(success=success, message=message, object_dynamics=object_dynamics_msg)
+
+
+    def service_change_pybullet_object_dynamics(self, req):
+
+        success = True
+        message = 'changed pybullet object dynamics'
+
+        # Get object
+        if req.object_name in self.pybullet_objects:
+            object = self.pybullet_objects[req.object_name]
+        else:
+            success = False
+            message = f"did not recognize object name"
+            self.logerr(message)
+            return ChangeObjectDynamicsResponse(success=success, message=message)
+
+        # Get object type
+        if isinstance(object, PybulletCollisionObject):
+            object_type = PybulletCollisionObject
+        elif isinstance(object, PybulletDynamicObject):
+            object_type = PybulletDynamicObject
+        else:
+            success = False
+            message = f"did not recognize object type"
+            self.logerr(message)
+            return ChangeObjectDynamicsResponse(success=success, message=message)
+        
+        object_dynamics_msg = req.object_dynamics
+        object_dynamics = {}
+
+        object_dynamics['mass'] = object_dynamics_msg.mass
+        object_dynamics['lateralFriction'] = object_dynamics_msg.lateral_friction
+        object_dynamics['localInertiaDiagonal'] = object_dynamics_msg.local_inertia_diagonal
+        object_dynamics['restitution'] = object_dynamics_msg.restitution
+        object_dynamics['rollingFriction'] = object_dynamics_msg.rolling_friction
+        object_dynamics['spinningFriction'] = object_dynamics_msg.spinning_friction
+        object_dynamics['contactDamping'] = object_dynamics_msg.contact_damping
+        object_dynamics['contactStiffness'] = object_dynamics_msg.contact_stiffness
+        object_dynamics['collisionMargin'] = object_dynamics_msg.collision_margin
+
+        object.change_dynamics(object_dynamics)
+
+        return ChangeObjectDynamicsResponse(success=success, message=message)
 
 
     def service_remove_pybullet_object(self, req):

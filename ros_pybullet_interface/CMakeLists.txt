@@ -31,6 +31,7 @@ add_service_files(
   GetDebugVisualizerCamera.srv
   AddPybulletObject.srv
   GetObjectDynamics.srv
+  ChangeObjectDynamics.srv
 )
 
 generate_messages(
