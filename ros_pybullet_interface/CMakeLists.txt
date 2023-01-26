@@ -17,6 +17,7 @@ add_message_files(
   JointInfo.msg
   CalculateInverseKinematicsProblem.msg
   PybulletObject.msg
+  ObjectDynamics.msg
   KeyboardEvent.msg
   MouseEvent.msg
 )
@@ -29,6 +30,8 @@ add_service_files(
   CalculateInverseKinematics.srv
   GetDebugVisualizerCamera.srv
   AddPybulletObject.srv
+  GetObjectDynamics.srv
+  ChangeObjectDynamics.srv
 )
 
 generate_messages(

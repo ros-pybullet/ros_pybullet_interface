@@ -1,0 +1,9 @@
+float64 mass
+float64 lateral_friction
+float64[] local_inertia_diagonal
+float64 restitution
+float64 rolling_friction
+float64 spinning_friction
+float64 contact_damping
+float64 contact_stiffness
+float64 collision_margin
