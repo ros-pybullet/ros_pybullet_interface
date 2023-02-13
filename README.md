@@ -5,8 +5,8 @@ Furthermore, this framework provides several interfaces that allow humans to int
 
 # Requirements
 
-* ROS2 Foxy
-* Ubuntu 20.04
+* ROS2 Humble Hawksbill
+* Ubuntu 22.04
 * Python 3
 
 # Cite
