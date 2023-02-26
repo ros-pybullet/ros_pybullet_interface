@@ -1,0 +1,17 @@
+<library path="./">
+  <class name="PyBulletInterfaceControls" type="ros_pybullet_rqt_plugin.ros2_pybullet_interface_controls.Ros2PyBulletInterfaceControls" base_class_type="rqt_gui_py::Plugin">
+    <description>
+      RQT plugin used to perform basic interactions with ROS-PyBullet Interface.
+    </description>
+    <qtgui>
+      <group>
+        <label>Introspection</label>
+        <icon type="theme">folder</icon>
+        <statustip>Plugins related to introspection.</statustip>
+      </group>
+      <label>PyBullet Interface Controls</label>
+      <icon type="theme">input-gaming</icon>
+      <statustip>A Python GUI plugin for ROS-PyBullet Interface.</statustip>
+    </qtgui>
+  </class>
+</library>
