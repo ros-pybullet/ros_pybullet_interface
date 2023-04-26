@@ -1,6 +1,0 @@
-name: "cube"
-
-loadURDF:
-  fileName: "{rpbi_examples}/configs/soft_body/cube.urdf"
-  basePosition: [0, 1, 2]
-  useMaximalCoordinates: true

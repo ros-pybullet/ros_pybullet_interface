@@ -1,9 +1,0 @@
-name: 'visual_wpt1'
-
-createVisualShape:
-  shapeType: "GEOM_SPHERE"
-  radius: 0.025
-  rgbaColor: [0.0, 1.0, 0, 0.6]
-
-object_tf:
-  tf_id: "rpbi/visual_wpt1"

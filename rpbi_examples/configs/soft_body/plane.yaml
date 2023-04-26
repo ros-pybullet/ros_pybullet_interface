@@ -1,5 +1,0 @@
-name: "plane"
-
-loadURDF:
-  fileName: "{rpbi_examples}/configs/soft_body/plane.urdf"
-  basePosition: [0, 0, 1]
