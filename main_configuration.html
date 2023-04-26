@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Main Configuration &mdash; ROS-PyBullet Interface  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Create Virutal Worlds" href="create_virtual_worlds.html" />
+    <link rel="prev" title="Examples" href="examples.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ROS-PyBullet Interface
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Main Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-files">Configuration files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pybullet-instance">PyBullet Instance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#visualizer">Visualizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pybullet-objects">PyBullet Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sensors">Sensors</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="create_virtual_worlds.html">Create Virutal Worlds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="communication_with_ros.html">Communication with ROS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="additional_features.html">Additional Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cite.html">Cite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="develop.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">Acknowledgements</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ROS-PyBullet Interface</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Main Configuration</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="main-configuration">
+<span id="mainconfig"></span><h1>Main Configuration<a class="headerlink" href="#main-configuration" title="Permalink to this heading"></a></h1>
+<p>The ROS-PyBullet Interface is launched from a ROS <code class="docutils literal notranslate"><span class="pre">.launch</span></code> file.
+Configuring the interface amounts to passing a <code class="docutils literal notranslate"><span class="pre">.yaml</span></code> file as follows.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;node</span><span class="w"> </span><span class="na">pkg=</span><span class="s">&quot;ros_pybullet_interface&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ros_pybullet_interface&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;ros_pybullet_interface_node.py&quot;</span><span class="w"> </span><span class="na">output=</span><span class="s">&quot;screen&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;rosparam</span><span class="w"> </span><span class="na">param=</span><span class="s">&quot;config&quot;</span><span class="w"> </span><span class="na">file=</span><span class="s">&quot;path/to/config.yaml&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/node&gt;</span>
+</pre></div>
+</div>
+<p>In the example above, the <code class="docutils literal notranslate"><span class="pre">config.yaml</span></code> file specifies the virtual world.
+This is the file where you can list what objects and robots to load, specify visualization options, and configure PyBullet physics parameters.</p>
+<section id="configuration-files">
+<h2>Configuration files<a class="headerlink" href="#configuration-files" title="Permalink to this heading"></a></h2>
+<p>We use <a class="reference external" href="https://yaml.org/">yaml</a> as the format for configuration files.
+Many of the tags used are directly passed to PyBullet functions.
+For example, take the <a class="reference external" href="https://docs.google.com/document/d/10sXEhzFRSnvFcl3XxNGhnD4N2SedqwdAvK3dsihxVUA/edit#heading=h.d6ihmmtes1id">pybullet.setGravity</a> method.
+In the ROS-PyBullet Interface node, during initialization of the PyBullet instance, if the user provides the <code class="docutils literal notranslate"><span class="pre">setGravity</span></code> tag, as follows, in the main yaml configuration file (full details in next section) then the <code class="docutils literal notranslate"><span class="pre">pybullet.setGravity</span></code> method is called.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">setGravity</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">gravX</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
+<span class="w">  </span><span class="nt">gravY</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
+<span class="w">  </span><span class="nt">gravZ</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-9.81</span>
+</pre></div>
+</div>
+<p>Notice in the above example that the tag and sub-tags match the interface for the PyBullet method - this is deliberate.
+<em>Under-the-hood</em> of the interface, the values given in the configuration file are directly passed to the corresponding method in the PyBullet library.
+Please note that in all cases for the library functions, most methods take an optional argument <code class="docutils literal notranslate"><span class="pre">physicsClientId</span></code> (for cases when multiple PyBullet servers are setup), this <strong>should not</strong> be passed - only a single PyBullet server can be created.
+In all cases, the default values for the PyBullet library methods are used.
+There are method in the PyBullet library that take a <code class="docutils literal notranslate"><span class="pre">flags</span></code> option.
+In this case, you can pass the strings (e.g. in the <code class="docutils literal notranslate"><span class="pre">loadURDF</span></code> method, you can specify``flags`` as <code class="docutils literal notranslate"><span class="pre">URDF_MERGE_FIXED_LINKS|URDF_USE_INERTIA_FROM_FILE</span></code>).
+Note that not all methods are exposed in this way.</p>
+<p>The PyBullet library uses the <code class="docutils literal notranslate"><span class="pre">camelCase</span></code> style for its methods/parameters, we use this style for methods/parameters that directly correspond to a library function.
+There are some tags that are used to generate different behavior with regards to the interface itself.
+In this case, we use <code class="docutils literal notranslate"><span class="pre">snake_case</span></code> style to differentiate these parameters.
+The benefit for this style-guide is that it allows you to easily tell the difference between parameters that are linked to PyBullet and those that are linked to the interface.
+Furthermore, for the <code class="docutils literal notranslate"><span class="pre">camelCase</span></code> functions/parameters, you can look these up in the <a class="reference external" href="https://docs.google.com/document/d/10sXEhzFRSnvFcl3XxNGhnD4N2SedqwdAvK3dsihxVUA/edit#heading=h.2ye70wns7io3">PyBullet Quickstart Guide</a>.
+Note, there are some exceptions to the rules however these are documented when necessary.</p>
+<p>Our basic “hello world example” is launched using <a class="reference external" href="https://github.com/ros-pybullet/ros_pybullet_interface/blob/main/rpbi_examples/launch/basic_example_kuka_lwr.launch">basic_example_kuka_lwr.launch</a>.
+The main configuration file, <a class="reference external" href="https://github.com/ros-pybullet/ros_pybullet_interface/blob/main/rpbi_examples/configs/basic_example_kuka_lwr/config.yaml">config.yaml</a>, is given as follows.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="c1"># Basic example</span>
+<span class="c1">#</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># Pybullet instance</span>
+<span class="c1">#</span>
+<span class="nt">connect</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">connection_mode</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;GUI&#39;</span>
+<span class="w">  </span><span class="nt">options</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;--mp4=$HOME/basic_example_kuka_lwr.mp4&#39;</span>
+
+<span class="nt">setGravity</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">gravX</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
+<span class="w">  </span><span class="nt">gravY</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
+<span class="w">  </span><span class="nt">gravZ</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-9.81</span>
+
+<span class="nt">timeStep</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.01</span>
+<span class="nt">start_pybullet_after_initialization</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="nt">status_hz</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
+
+<span class="c1">#</span>
+<span class="c1"># Pybullet visualizer</span>
+<span class="c1">#</span>
+<span class="nt">configureDebugVisualizer</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">  </span><span class="nt">flag</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;COV_ENABLE_GUI&#39;</span>
+
+<span class="nt">resetDebugVisualizerCamera</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">cameraDistance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.0</span>
+<span class="w">  </span><span class="nt">cameraYaw</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
+<span class="w">  </span><span class="nt">cameraPitch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-45.0</span>
+<span class="w">  </span><span class="nt">cameraTargetPosition</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.0</span><span class="p p-Indicator">]</span>
+
+<span class="c1">#</span>
+<span class="c1"># Pybullet objects</span>
+<span class="c1">#</span>
+<span class="nt">collision_objects</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;{rpbi_examples}/configs/floor.yaml&quot;</span>
+<span class="nt">robots</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;{rpbi_examples}/configs/basic_example_kuka_lwr/kuka_lwr.yaml&quot;</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># Sensors</span>
+<span class="c1">#</span>
+
+<span class="nt">rgbd_sensor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;rgbd_sensor&#39;</span>
+<span class="w">  </span><span class="nt">hz</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span>
+<span class="w">  </span><span class="c1"># this will project the depth to a point cloud</span>
+<span class="w">  </span><span class="c1"># pointcloud: True</span>
+<span class="w">  </span><span class="nt">intrinsics</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">width</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">640</span>
+<span class="w">    </span><span class="nt">height</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">480</span>
+<span class="w">    </span><span class="nt">fov</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">40</span>
+<span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.01</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">10000</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">object_tf</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">tf_id</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;rpbi/camera&#39;</span>
+</pre></div>
+</div>
+<p>You will notice that there are four main sections in the main configuration file:
+PyBullet instance, PyBullet visualizer, PyBullet objects, and sensors.
+Details for each of these are given in the following sub-sections.</p>
+<p>Note, the order in which these sections or the parameters themselves are listed does not necessarily need to be in any particular ordering.
+However, we suggest you follow this convention so that configuration files are more readable.</p>
+</section>
+<section id="pybullet-instance">
+<h2>PyBullet Instance<a class="headerlink" href="#pybullet-instance" title="Permalink to this heading"></a></h2>
+<p>This section of the main configuration file allows you to setup the main PyBullet instance.
+The type of settings you can set in this section relate to physical parameter (e.g. gravity), or time (e.g. simulator time-step), etc.
+Some parameters are expected, and others are optional.
+The full list of possible parameters are listed as follows.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">connect</span></code> (required), see PyBullet documentation. Note, the <code class="docutils literal notranslate"><span class="pre">connection_mode</span></code> can be passed as a string. Also note, a very useful feature is recording videos of the interface - see the <code class="docutils literal notranslate"><span class="pre">options</span></code> parameter.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">setAdditionalSearchPath</span></code>, see PyBullet documentation. Note, you can pass the string <code class="docutils literal notranslate"><span class="pre">&quot;pybullet_data_path&quot;</span></code>, this will add the additional search path given by <cite>pybullet_data.getDataPath()</cite>. Also note, that a list of paths can be given, these will all get added.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">resetSimulation</span></code>, see PyBullet documentation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">setGravity</span></code>, see PyBullet documentation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">timeStep</span></code> [<code class="docutils literal notranslate"><span class="pre">float</span></code>], Each time PyBullet is stepped time-step will proceed with by this duration (secs). Default is <code class="docutils literal notranslate"><span class="pre">0.02</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">setPhysicsEngineParameter</span></code>, see PyBullet documentation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">step_pybullet_manually</span></code> [<code class="docutils literal notranslate"><span class="pre">bool</span></code>], this is always <cite>true</cite> when the connection mode is <code class="docutils literal notranslate"><span class="pre">DIRECT</span></code>. Otherwise, you can specify PyBullet to be stepped manually inside a ROS Timer at the rate specified by the <code class="docutils literal notranslate"><span class="pre">timeStep</span></code> parameter. Otherwise, PyBullet will step itself internally. Differences have been observed, however it is not clear exactly what is happening inside the Bullet simulator source code.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">status_hz</span></code> [<code class="docutils literal notranslate"><span class="pre">int</span></code>], this is the frequency that the status publisher is broadcast to ROS.</p></li>
+</ul>
+</section>
+<section id="visualizer">
+<h2>Visualizer<a class="headerlink" href="#visualizer" title="Permalink to this heading"></a></h2>
+<p>The main GUI visualization camera can be adjusted in this section.
+Parameters that correspond to the visualization are listed as follows.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">configureDebugVisualizer</span></code>, see the PyBullet documentation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">resetDebugVisualizerCamera</span></code>, see the PyBullet documentation. Note, the pose of the camera can be adjusted by publishing new states to the ROS topic <code class="docutils literal notranslate"><span class="pre">rpbi/reset_debug_visualizer_camera</span></code> using the message type <code class="docutils literal notranslate"><span class="pre">ros_pybullet_interface/ResetDebugVisualizerCamera</span></code>.</p></li>
+</ul>
+</section>
+<section id="pybullet-objects">
+<h2>PyBullet Objects<a class="headerlink" href="#pybullet-objects" title="Permalink to this heading"></a></h2>
+<p>There are several object types that are supported by the ROS-PyBullet Interface:
+robots,
+collision objects,
+dynamic objects,
+visual objects,
+soft bodies, and
+objects loaded directly from a URDF file.
+This section of the main configuration file allows you to specify all the objects you want in your virtual world by listing the path to the filename.
+You can specify these as follows.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">robots</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;{ros_package}/path/to/robot.yaml&quot;</span>
+
+<span class="nt">collision_objects</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;absolute/path/to/collision_obj.yaml&quot;</span>
+
+<span class="nt">dynamic_objects</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;{ros_package}/path/to/dynamic_obj.yaml&quot;</span>
+
+<span class="nt">visual_objects</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;{ros_package}/path/to/visual_obj.yaml&quot;</span>
+
+<span class="nt">soft_objects</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;{ros_package}/path/to/soft_body.yaml&quot;</span>
+
+<span class="nt">urdfs</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;{ros_package}/path/to/urdf_obj.yaml&quot;</span>
+</pre></div>
+</div>
+<p><em>Note</em>:</p>
+<ul class="simple">
+<li><p>all the above tags are optional,</p></li>
+<li><p>multiple objects can be listed for each object type, and</p></li>
+<li><p>each filename can be specified with an absolute path (see <code class="docutils literal notranslate"><span class="pre">collision_objects</span></code> above), or by a relative path to a ROS package using curly brackets <code class="docutils literal notranslate"><span class="pre">{ros_package}</span></code> (as above in all other examples).</p></li>
+</ul>
+<p>All the object types have a different required/optional settings that must be given in the specified yaml configuration files.
+The details for all these are given in the next section of the documentation.</p>
+</section>
+<section id="sensors">
+<h2>Sensors<a class="headerlink" href="#sensors" title="Permalink to this heading"></a></h2>
+<p>There are two main types of sensors that can be simulated in the ROS-PyBullet Interface: Force-Torque sensors, and RGBD cameras.
+The Force-Torque sensors must be connected to a robot link, see the following section of the documentation for details on how to setup this sensor.
+An RGBD camera can also be specified.
+Currently, the interface is limited to only a single camera.</p>
+<p>If desired, the RGBD camera can be specified in the main configuration file by adding the tag <code class="docutils literal notranslate"><span class="pre">rgbd_sensor</span></code> (as in the basic Kuka LWR example above).
+The parameters used to configure the RGBD camera are listed as follows.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code> (required), the name of the sensor. Each PyBullet object is given a name, all these must be unique - more details are given in the next section of the documentation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">intrinsics</span></code>, camera intrinsic parameters</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">width</span></code> [<code class="docutils literal notranslate"><span class="pre">int</span></code>], width of camera image. Default is <code class="docutils literal notranslate"><span class="pre">640</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">height</span></code> [<code class="docutils literal notranslate"><span class="pre">int</span></code>], height of the camera image. Default is <code class="docutils literal notranslate"><span class="pre">480</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fov</span></code> [<code class="docutils literal notranslate"><span class="pre">int</span></code>], field of view. Default is <code class="docutils literal notranslate"><span class="pre">40</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">range</span></code> [<code class="docutils literal notranslate"><span class="pre">list[float]</span></code>], depth range. Default is <code class="docutils literal notranslate"><span class="pre">[0.01,</span> <span class="pre">100.0]</span></code>.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pointcloud</span></code> [<code class="docutils literal notranslate"><span class="pre">bool</span></code>], when <code class="docutils literal notranslate"><span class="pre">true</span></code> the depth camera is projected as a point cloud and published to ROS. <em>Note</em>, due to the computation required this will slow the simulation. Standard ROS packages can efficiently compute this outside the simulator (as in the examples). It is recommended that you <strong>do not</strong> use this option. We originally added it for experimentation. Default is <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hz</span></code> [<code class="docutils literal notranslate"><span class="pre">int</span></code>], frequency that the RGBD sensor is updated. Default is <code class="docutils literal notranslate"><span class="pre">30</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">object_tf</span></code> (required), the pose of the camera must be attached to a <code class="docutils literal notranslate"><span class="pre">tf2</span></code> (transform) frame</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">tf_id</span></code> [<code class="docutils literal notranslate"><span class="pre">str</span></code>] (required), the <code class="docutils literal notranslate"><span class="pre">tf2</span></code> frame ID that defines the camera pose. This frame <strong>must</strong> be defined with respect to the <code class="docutils literal notranslate"><span class="pre">rpbi/world</span></code> frame.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hz</span></code> [<code class="docutils literal notranslate"><span class="pre">int</span></code>], the frequency that the pose is queried. Default is <code class="docutils literal notranslate"><span class="pre">30</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="examples.html" class="btn btn-neutral float-left" title="Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="create_virtual_worlds.html" class="btn btn-neutral float-right" title="Create Virutal Worlds" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Christopher E. Mower, Theodoros Stouraitis, Sethu Vijayakumar, University of Edinburgh.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

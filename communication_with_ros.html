@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Communication with ROS &mdash; ROS-PyBullet Interface  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Additional Features" href="additional_features.html" />
+    <link rel="prev" title="Create Virutal Worlds" href="create_virtual_worlds.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ROS-PyBullet Interface
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main_configuration.html">Main Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="create_virtual_worlds.html">Create Virutal Worlds</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Communication with ROS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#services">Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#rpbi-start-std-srv-trigger"><code class="docutils literal notranslate"><span class="pre">rpbi/start</span></code> (<code class="docutils literal notranslate"><span class="pre">std_srv/Trigger</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rpbi-step-std-srv-trigger"><code class="docutils literal notranslate"><span class="pre">rpbi/step</span></code> (<code class="docutils literal notranslate"><span class="pre">std_srv/Trigger</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rpbi-stop-std-srv-trigger"><code class="docutils literal notranslate"><span class="pre">rpbi/stop</span></code> (<code class="docutils literal notranslate"><span class="pre">std_srv/Trigger</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rpbi-get-debug-visualizer-camera-ros-pybullet-interface-getdebugvisualizercamera"><code class="docutils literal notranslate"><span class="pre">rpbi/get_debug_visualizer_camera</span></code> (<code class="docutils literal notranslate"><span class="pre">ros_pybullet_interface/GetDebugVisualizerCamera</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rpbi-add-pybullet-object-ros-pybullet-interface-addpybulletobject"><code class="docutils literal notranslate"><span class="pre">rpbi/add_pybullet_object</span></code> (<code class="docutils literal notranslate"><span class="pre">ros_pybullet_interface/AddPybulletObject</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rpbi-remove-pybullet-object-cob-srv-setstring"><code class="docutils literal notranslate"><span class="pre">rpbi/remove_pybullet_object</span></code> (<code class="docutils literal notranslate"><span class="pre">cob_srv/SetString</span></code>)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#pybullet-status">PyBullet Status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#time-and-ros-clock">Time and ROS Clock</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="additional_features.html">Additional Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cite.html">Cite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="develop.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">Acknowledgements</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ROS-PyBullet Interface</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Communication with ROS</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="communication-with-ros">
+<h1>Communication with ROS<a class="headerlink" href="#communication-with-ros" title="Permalink to this heading"></a></h1>
+<p>In this section, we discuss generally the kind of communication that the interface has with ROS.
+This is mainly in terms of topics/services.
+For PyBullet object specific ROS communication, see previous sections.</p>
+<section id="services">
+<h2>Services<a class="headerlink" href="#services" title="Permalink to this heading"></a></h2>
+<p>Several services are instantiated when the ROS-PyBullet Interface node is launched.
+These allow you to either programatically interact with PyBullet from your own code, or from the command line.
+These serives are detailed as follows.</p>
+<section id="rpbi-start-std-srv-trigger">
+<h3><code class="docutils literal notranslate"><span class="pre">rpbi/start</span></code> (<code class="docutils literal notranslate"><span class="pre">std_srv/Trigger</span></code>)<a class="headerlink" href="#rpbi-start-std-srv-trigger" title="Permalink to this heading"></a></h3>
+<p>The simulation is started, if it has been stopped.</p>
+</section>
+<section id="rpbi-step-std-srv-trigger">
+<h3><code class="docutils literal notranslate"><span class="pre">rpbi/step</span></code> (<code class="docutils literal notranslate"><span class="pre">std_srv/Trigger</span></code>)<a class="headerlink" href="#rpbi-step-std-srv-trigger" title="Permalink to this heading"></a></h3>
+<p>If the simulation is stopped, then it is stepped by one time-step.
+The duration of the time-step is given by the <code class="docutils literal notranslate"><span class="pre">timeStep</span></code> parameter in the main configuration file.</p>
+</section>
+<section id="rpbi-stop-std-srv-trigger">
+<h3><code class="docutils literal notranslate"><span class="pre">rpbi/stop</span></code> (<code class="docutils literal notranslate"><span class="pre">std_srv/Trigger</span></code>)<a class="headerlink" href="#rpbi-stop-std-srv-trigger" title="Permalink to this heading"></a></h3>
+<p>The simulation is stopped, if it is running.</p>
+</section>
+<section id="rpbi-get-debug-visualizer-camera-ros-pybullet-interface-getdebugvisualizercamera">
+<h3><code class="docutils literal notranslate"><span class="pre">rpbi/get_debug_visualizer_camera</span></code> (<code class="docutils literal notranslate"><span class="pre">ros_pybullet_interface/GetDebugVisualizerCamera</span></code>)<a class="headerlink" href="#rpbi-get-debug-visualizer-camera-ros-pybullet-interface-getdebugvisualizercamera" title="Permalink to this heading"></a></h3>
+<p>When this service is called, the response returns the current parameters for the main visualizer: i.e.
+<code class="docutils literal notranslate"><span class="pre">cameraDistance</span></code>,
+<code class="docutils literal notranslate"><span class="pre">cameraYaw</span></code>,
+<code class="docutils literal notranslate"><span class="pre">cameraPitch</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">cameraTargetPosition</span></code>.</p>
+</section>
+<section id="rpbi-add-pybullet-object-ros-pybullet-interface-addpybulletobject">
+<h3><code class="docutils literal notranslate"><span class="pre">rpbi/add_pybullet_object</span></code> (<code class="docutils literal notranslate"><span class="pre">ros_pybullet_interface/AddPybulletObject</span></code>)<a class="headerlink" href="#rpbi-add-pybullet-object-ros-pybullet-interface-addpybulletobject" title="Permalink to this heading"></a></h3>
+<p>An object is added to PyBullet.
+The service allows you to either load from file or pass the configuration for the object.
+The input for the service expects a <code class="docutils literal notranslate"><span class="pre">ros_pybullet_interface/PybulletObject</span></code> message - see <a class="reference external" href="https://github.com/ros-pybullet/ros_pybullet_interface/blob/main/ros_pybullet_interface/msg/PybulletObject.msg">here</a>.</p>
+<p>For both cases (i.e. load from filename or configuration), an <code class="docutils literal notranslate"><span class="pre">object_type</span></code> must be given.
+Either <code class="docutils literal notranslate"><span class="pre">PybulletObject.VISUAL</span></code>, <code class="docutils literal notranslate"><span class="pre">PybulletObject.COLLISION</span></code>, <code class="docutils literal notranslate"><span class="pre">PybulletObject.DYNAMIC</span></code>, <code class="docutils literal notranslate"><span class="pre">PybulletObject.ROBOT</span></code>, <code class="docutils literal notranslate"><span class="pre">PybulletObject.SOFT</span></code>, or <code class="docutils literal notranslate"><span class="pre">PybulletObject.URDF</span></code>.</p>
+<p><em>Load from filename</em>: the <code class="docutils literal notranslate"><span class="pre">PybulletObject.filename</span></code> variable must be set.
+You can specify reletive filenames by giving a ROS package name in the format <code class="docutils literal notranslate"><span class="pre">{ros_package}/path/to/file.yaml</span></code>.</p>
+<p><em>Load from configuration</em>: if you want to pass the configuration in the service then you need to send it as a string, that is ultimately a yaml file. In Python, the best way to do this is to specify the configration in a <code class="docutils literal notranslate"><span class="pre">dict</span></code> (in the same way a yaml file is loaded) and convert it to a string using the <code class="docutils literal notranslate"><span class="pre">config_to_str</span></code> method provided in <code class="docutils literal notranslate"><span class="pre">custom_ros_tools.config</span></code>.
+See example below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">custom_ros_tools.config</span> <span class="kn">import</span> <span class="n">config_to_str</span>
+<span class="kn">from</span> <span class="nn">ros_pybullet_interface.msg</span> <span class="kn">import</span> <span class="n">PybulletObject</span>
+
+<span class="c1"># make config</span>
+<span class="n">config</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="c1"># ...</span>
+
+<span class="c1"># Setup request</span>
+<span class="n">req</span> <span class="o">=</span> <span class="n">PybulletObject</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config_to_str</span><span class="p">(</span><span class="n">config</span><span class="p">))</span>
+</pre></div>
+</div>
+<p><strong>Note</strong>: loading from a filename takes precedence - if you want to load by passing the configuration then the <code class="docutils literal notranslate"><span class="pre">filename</span></code> parameter must not be set.</p>
+</section>
+<section id="rpbi-remove-pybullet-object-cob-srv-setstring">
+<h3><code class="docutils literal notranslate"><span class="pre">rpbi/remove_pybullet_object</span></code> (<code class="docutils literal notranslate"><span class="pre">cob_srv/SetString</span></code>)<a class="headerlink" href="#rpbi-remove-pybullet-object-cob-srv-setstring" title="Permalink to this heading"></a></h3>
+<p>Given the PyBullet object name as the only parameter, the object is removed from PyBullet, and all ROS communication for that object is closed.</p>
+</section>
+</section>
+<section id="pybullet-status">
+<h2>PyBullet Status<a class="headerlink" href="#pybullet-status" title="Permalink to this heading"></a></h2>
+<p>From when the ROS-PyBullet node is launched, the state of PyBullet is published to the topic <code class="docutils literal notranslate"><span class="pre">rpbi/status</span></code> (with type <code class="docutils literal notranslate"><span class="pre">std_msgs/Int64</span></code>).
+By default, this is published at 50Hz, however you specify the frequency through the <code class="docutils literal notranslate"><span class="pre">status_hz</span></code> parameter in the main configuration file.
+The message on the topic indicates whether the simulator is running or not.
+If it is running, then the value of the message is <code class="docutils literal notranslate"><span class="pre">1</span></code>, otherwise it is <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
+</section>
+<section id="time-and-ros-clock">
+<h2>Time and ROS Clock<a class="headerlink" href="#time-and-ros-clock" title="Permalink to this heading"></a></h2>
+<p>It is possible to syncronize the ROS clock time with the PyBullet simulation time.
+This means that when you call <code class="docutils literal notranslate"><span class="pre">rospy.Time.now()</span></code> in Python or <code class="docutils literal notranslate"><span class="pre">ros::Time::now()</span></code> in C++, the value will be equal to the simulation time in PyBullet.
+This can only be done when the ROS-Pybullet Interface node is configured to use manual time stepping (the reason for this is because <a class="reference external" href="https://pybullet.org/Bullet/phpBB3/viewtopic.php?t=12438">the Pybullet simulator time is not currently exposed</a>).
+To synconize the PyBullet simulator time and ROS clock time, set the Boolean ROS parameter <code class="docutils literal notranslate"><span class="pre">use_sim_time</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="create_virtual_worlds.html" class="btn btn-neutral float-left" title="Create Virutal Worlds" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="additional_features.html" class="btn btn-neutral float-right" title="Additional Features" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Christopher E. Mower, Theodoros Stouraitis, Sethu Vijayakumar, University of Edinburgh.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

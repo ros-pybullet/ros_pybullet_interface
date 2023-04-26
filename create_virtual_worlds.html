@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Virutal Worlds &mdash; ROS-PyBullet Interface  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Communication with ROS" href="communication_with_ros.html" />
+    <link rel="prev" title="Main Configuration" href="main_configuration.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ROS-PyBullet Interface
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main_configuration.html">Main Configuration</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Create Virutal Worlds</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#robot">Robot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#collision-object">Collision Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dynamic-object">Dynamic Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#visual-object">Visual Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#soft-bodies">Soft bodies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#loading-from-urdf">Loading from URDF</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="communication_with_ros.html">Communication with ROS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="additional_features.html">Additional Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cite.html">Cite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="develop.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">Acknowledgements</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ROS-PyBullet Interface</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Create Virutal Worlds</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="create-virutal-worlds">
+<h1>Create Virutal Worlds<a class="headerlink" href="#create-virutal-worlds" title="Permalink to this heading"></a></h1>
+<p>A virtual world can be created by listing the objects in the main configuration file (see the previous section).
+In addition, PyBullet objects can be added programatically (see the next section of the documentation) or even from the command line using <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">rosservice</span> <span class="pre">call</span></code>.
+We give full details for the the available PyBullet object types in the following sub-sections.</p>
+<p>For <em>every</em> PyBullet object type, the configuration file <strong>must</strong> contain a <code class="docutils literal notranslate"><span class="pre">name</span></code> tag [<code class="docutils literal notranslate"><span class="pre">str</span></code>].
+The name given to the object <strong>must</strong> be unique with respect to all other PyBullet objects (even of different types).</p>
+<p>Futuremore, all objects are defined with respect to a global base coordinate frame called <code class="docutils literal notranslate"><span class="pre">rpbi/world</span></code>.</p>
+<section id="robot">
+<h2>Robot<a class="headerlink" href="#robot" title="Permalink to this heading"></a></h2>
+<p>A robot can be specified using a URDF file.
+Currently, this is the only format accepted by the ROS-PyBullet Interface.
+The parameters for specifying a robot are listed as follows.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">loadURDF</span></code> (required), see the PyBullet documentation. Note the <code class="docutils literal notranslate"><span class="pre">fileName</span></code> can be given relative to a ROS package using curley brackets <code class="docutils literal notranslate"><span class="pre">{ros_package}</span></code>. In addition, if the <code class="docutils literal notranslate"><span class="pre">fileName</span></code> is given as <code class="docutils literal notranslate"><span class="pre">robot_description</span></code> then the URDF file is retrieved from the <code class="docutils literal notranslate"><span class="pre">robot_description</span></code> ROS parameter - of course, this must be set in the launch file or a script somewhere.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">setJointMotorControlArray</span></code> (required), see the PyBullet documentation. Only the <code class="docutils literal notranslate"><span class="pre">controlMode</span></code> is required to be specified. <strong>Do not</strong> specify <code class="docutils literal notranslate"><span class="pre">jointIndices</span></code>, <code class="docutils literal notranslate"><span class="pre">targetPositions</span></code>, <code class="docutils literal notranslate"><span class="pre">targetVelocities</span></code>, <code class="docutils literal notranslate"><span class="pre">forces</span></code>, or the <code class="docutils literal notranslate"><span class="pre">physicsClientId</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">initial_joint_positions</span></code> [<code class="docutils literal notranslate"><span class="pre">dict[str:</span> <span class="pre">float]</span></code>], the initial joint positions for the robot. You can specify any joints you wish by giving the joint name and initial joint position value. Unspecified joints default to <code class="docutils literal notranslate"><span class="pre">0.0</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">initial_revolute_joint_positions_are_deg</span></code>, when <code class="docutils literal notranslate"><span class="pre">true</span></code> the initial joint positions for revolute joints are assumed to be given in degrees, otherwise radians. Default is <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">joint_state_publisher_hz</span></code> [<code class="docutils literal notranslate"><span class="pre">int</span></code>], frequency that the robot joint states are published to ROS on the topic <code class="docutils literal notranslate"><span class="pre">rpbi/NAME/joint_states</span></code> with type <code class="docutils literal notranslate"><span class="pre">sensor_msgs/JointState</span></code> where <code class="docutils literal notranslate"><span class="pre">NAME</span></code> is the PyBullet object name.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">broadcast_link_states</span></code> [<code class="docutils literal notranslate"><span class="pre">bool</span></code>], when true the robot links for the robot are broadcast to ROS as <code class="docutils literal notranslate"><span class="pre">tf2</span></code> frames.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">broadcast_link_states_hz</span></code> [<code class="docutils literal notranslate"><span class="pre">int</span></code>], the frequency that the links of the robot are broadcast to ROS.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">enabled_joint_force_torque_sensors</span></code> [<code class="docutils literal notranslate"><span class="pre">list[str]</span></code>], list of joint names that have Force-Torque sensors enabled. Names of joints should correspond to those defined in the URDF. When these sensors are enabled, they are published to ROS with topic name <code class="docutils literal notranslate"><span class="pre">rpbi/NAME/JOINTNAME/ft_sensor</span></code> with type <code class="docutils literal notranslate"><span class="pre">geometry_msgs/WrenchStamped</span></code> where <code class="docutils literal notranslate"><span class="pre">NAME</span></code> is the PyBullet object name, and <code class="docutils literal notranslate"><span class="pre">JOINTNAME</span></code> is the given joint name.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">is_visual_robot</span></code> [<code class="docutils literal notranslate"><span class="pre">bool</span></code>], when <code class="docutils literal notranslate"><span class="pre">true</span></code> the robot is treated a visual object, i.e. it will not react to other objects in the environment and other objects will not react to the robot. This can be useful for debugging and also visualizing a real robot. The default value is <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">do_log_joint_limit_violations</span></code> [<code class="docutils literal notranslate"><span class="pre">bool</span></code>], when the robot is a visual robot if <code class="docutils literal notranslate"><span class="pre">true</span></code> then the joint limit violations are reported to the terminal.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">log_joint_limit_violations_hz</span></code> [<code class="docutils literal notranslate"><span class="pre">int</span></code>], the frequency that the joint limit violations are checked.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">start_ik_callback</span></code> [<code class="docutils literal notranslate"><span class="pre">bool</span></code>], when true a subscriber is started for the topic <code class="docutils literal notranslate"><span class="pre">rpbi/NAME/ik</span></code> of message type <code class="docutils literal notranslate"><span class="pre">ros_pybullet_interface/CalculateInverseKinematicsProblem</span></code> where <code class="docutils literal notranslate"><span class="pre">NAME</span></code> is the name of the Pybullet object. This allows you to implement task space controller. Rather than streaming target joint states to the robot, you can stream goal states (defined as a <code class="docutils literal notranslate"><span class="pre">ros_pybullet_interface/CalculateInverseKinematicsProblem</span></code> message).  This option can only be used when the robot is in the <code class="docutils literal notranslate"><span class="pre">POSITION_CONTROL</span></code> or <code class="docutils literal notranslate"><span class="pre">VELOCITY_CONTROL</span></code> control modes.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">color_alpha</span></code> [<code class="docutils literal notranslate"><span class="pre">float</span></code>], the alpha value for the robot in range <code class="docutils literal notranslate"><span class="pre">[0.0,</span> <span class="pre">1.0]</span></code>. This allows you to make the robot transparent. By default, this option is not used.</p></li>
+</ul>
+<p>You can move the robot in several ways.
+The most common way is to stream target joint states by publishing to the topic <code class="docutils literal notranslate"><span class="pre">rpbi/NAME/joint_states/target</span></code> where <code class="docutils literal notranslate"><span class="pre">NAME</span></code> is the name of the Pybullet object.
+Note, that joint state messages must include the <code class="docutils literal notranslate"><span class="pre">name</span></code> parameter, i.e. a list of joint names that specify the order of the <code class="docutils literal notranslate"><span class="pre">position</span></code>/<code class="docutils literal notranslate"><span class="pre">velocity</span></code>/<code class="docutils literal notranslate"><span class="pre">effort</span></code> attributes.
+Another way to generate motion is to stream task space targets, see the tag <code class="docutils literal notranslate"><span class="pre">start_ik_callback</span></code> above.
+Finally, several services are provided that will move the robot to desired states - see below.</p>
+<p>Several ROS services are started when a PyBullet robot is instantiated.
+These are listed as follows.
+<em>Note</em>, in the following <code class="docutils literal notranslate"><span class="pre">NAME</span></code> is the name of the Pybullet object.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rpbi/NAME/robot_info</span></code> [<code class="docutils literal notranslate"><span class="pre">ros_pybullet_interface/RobotInfo</span></code>], returns information about the robot (i.e. the name, link/joint names, body unique ID, number of joints, number of degrees of freedom, joint information from PyBullet <code class="docutils literal notranslate"><span class="pre">pybullet.getJointInfo</span></code> method, see the <a class="reference external" href="https://docs.google.com/document/d/10sXEhzFRSnvFcl3XxNGhnD4N2SedqwdAvK3dsihxVUA/edit#heading=h.la294ocbo43o">documentation</a>, enabled Force-Torque sensors, and the current joint state).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rpbi/NAME/ik</span></code> [<code class="docutils literal notranslate"><span class="pre">ros_pybullet_interface/CalculateInverseKinematics</span></code>], compute a single IK. The target joint state is returned.</p></li>
+</ul>
+<p>The following ROS services are only created for robots that are <em>not visual</em> (i.e. the tag <code class="docutils literal notranslate"><span class="pre">is_visual_robot</span></code>, see above, is ommited or set to <code class="docutils literal notranslate"><span class="pre">false</span></code>).</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rpbi/NAME/move_to_joint_state</span></code> [<code class="docutils literal notranslate"><span class="pre">ros_pybullet_interface/ResetJointState</span></code>], given a target joint state and duration the robot is moved from the current state to the goal. The duration (in seconds) is the time it will take for the robot to move from the current state to the goal state. <em>Note</em>, there is no collision avoidance.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rpbi/NAME/move_to_init_joint_state</span></code> [<code class="docutils literal notranslate"><span class="pre">ros_pybullet_interface/ResetJointState</span></code>], moves the robot to the initial joint state specified in the yaml configuration file under the tag <code class="docutils literal notranslate"><span class="pre">initial_joint_positions</span></code> (see above). <em>Note</em>, we re-use the <code class="docutils literal notranslate"><span class="pre">ros_pybullet_interface/ResetJointState</span></code> service type here. That means when you call the service you will need to include the duration (i.e. time it takes for the robot to move from the current configuration to the goal) and an empty <code class="docutils literal notranslate"><span class="pre">sensor_msgs/JointState</span></code> message - the joint state message will be ignored. <em>Note</em>, there is no collision avoidance.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rpbi/NAME/move_to_eff_state</span></code> [<code class="docutils literal notranslate"><span class="pre">ros_pybullet_interface/ResetEffState</span></code>], given a task space target and a duration the robot is moved from the current configuration to a goal configuration (computed using PyBullet’s Inverse Kinematics feature). <em>Note</em>, there is no collision avoidnace.</p></li>
+</ul>
+</section>
+<section id="collision-object">
+<h2>Collision Object<a class="headerlink" href="#collision-object" title="Permalink to this heading"></a></h2>
+<p>For the collision object, other objects will react to it, but it will remain unaffected.
+Objects such as walls, doors, ceilings, floors should be modelled using this object type.
+The parameters to setup this object are listed as follows.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">createVisualShape</span></code> (required), see PyBullet documentation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">createCollisionShape</span></code> (required), see PyBullet documentation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">changeDynamics</span></code>, see PyBullet documentation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">object_tf</span></code>, if unspecified the default is the identity.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">tf_id</span></code> [<code class="docutils literal notranslate"><span class="pre">str</span></code>], the <code class="docutils literal notranslate"><span class="pre">tf2</span></code> frame ID that defines the camera pose. This frame <strong>must</strong> be defined with respect to the <code class="docutils literal notranslate"><span class="pre">rpbi/world</span></code> frame.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hz</span></code> [<code class="docutils literal notranslate"><span class="pre">int</span></code>], the frequency that the pose is queried. Default is <code class="docutils literal notranslate"><span class="pre">30</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="dynamic-object">
+<h2>Dynamic Object<a class="headerlink" href="#dynamic-object" title="Permalink to this heading"></a></h2>
+<p>You can simulate virtual objects using a dynamic object.
+In this case, the objects motion is completely defined by Pybullet.
+The parameters for this object type are as follows.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">createVisualShape</span></code> (required), see PyBullet documentation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">createCollisionShape</span></code> (required), see PyBullet documentation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">changeDynamics</span></code> (required), see PyBullet documentation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">baseMass</span></code> [<code class="docutils literal notranslate"><span class="pre">float</span></code>] (required), mass of the base.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">basePosition</span></code> [<code class="docutils literal notranslate"><span class="pre">list[float]</span></code>], base position in the <code class="docutils literal notranslate"><span class="pre">rpbi/world</span></code> frame.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">baseOrientation</span></code> [<code class="docutils literal notranslate"><span class="pre">list[float]</span></code>], base orientation in the <code class="docutils literal notranslate"><span class="pre">rpbi/world</span></code> frame (as a quaternion).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">resetBaseVelocity</span></code>, see PyBullet documentation. Note, the <code class="docutils literal notranslate"><span class="pre">bodyUniqueId</span></code> does not need to be passed. This will specify the initial velocity of the object.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">broadcast_hz</span></code> [<code class="docutils literal notranslate"><span class="pre">int</span></code>], this is the frequency that the object pose is broadcast to <code class="docutils literal notranslate"><span class="pre">tf2</span></code>. Default is <code class="docutils literal notranslate"><span class="pre">0</span></code> (i.e. the pose is not broadcast). The frame is always published with respect to the <code class="docutils literal notranslate"><span class="pre">rpbi/world</span></code> frame and given the name <code class="docutils literal notranslate"><span class="pre">rpbi/NAME</span></code> where <code class="docutils literal notranslate"><span class="pre">NAME</span></code> is the name of the PyBullet object.</p></li>
+</ul>
+</section>
+<section id="visual-object">
+<h2>Visual Object<a class="headerlink" href="#visual-object" title="Permalink to this heading"></a></h2>
+<p>A visual object is used primarily for visualizing real world objects or for debugging.
+These simply visualize objects, other objects will not react to this object and it will not react to other objects.
+To specify this object the following parameters can be used.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">createVisualShape</span></code> (required), see the PyBullet documentation. Note the <code class="docutils literal notranslate"><span class="pre">fileName</span></code> can be given relative to a ROS package using curley brackets <code class="docutils literal notranslate"><span class="pre">{ros_package}</span></code>. Also, the <code class="docutils literal notranslate"><span class="pre">shapeType</span></code> parameter can be passed as a string.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">object_tf</span></code>, if unspecified the default is the identity.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">tf_id</span></code> [<code class="docutils literal notranslate"><span class="pre">str</span></code>], the <code class="docutils literal notranslate"><span class="pre">tf2</span></code> frame ID that defines the camera pose. This frame <strong>must</strong> be defined with respect to the <code class="docutils literal notranslate"><span class="pre">rpbi/world</span></code> frame.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hz</span></code> [<code class="docutils literal notranslate"><span class="pre">int</span></code>], the frequency that the pose is queried. Default is <code class="docutils literal notranslate"><span class="pre">30</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="soft-bodies">
+<h2>Soft bodies<a class="headerlink" href="#soft-bodies" title="Permalink to this heading"></a></h2>
+<p>PyBullet also implements deformable object and cloth simulation.
+Soft bodies can be setup using the <code class="docutils literal notranslate"><span class="pre">pybullet.loadSoftBody</span></code> method, or from a URDF file.
+For the URDF, see the next section.
+When using the <code class="docutils literal notranslate"><span class="pre">loadSoftBody</span></code> approach, you can to specify the following tags.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">loadSoftBody</span></code> (required), see PyBullet documentation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">createSoftBodyAnchor</span></code> [<code class="docutils literal notranslate"><span class="pre">list[list[float/int]]</span></code>], pin vertices of a deformable object to the world. <em>Note</em>, the PyBullet documentation for <code class="docutils literal notranslate"><span class="pre">createSoftBodyAnchor</span></code> is limited. It is not clear what is exactly the interface. The soft body unique ID will be passed automatically, but any other parameters must be supplied. Some potential resources:</p>
+<ul>
+<li><p><a class="reference external" href="https://github.com/bulletphysics/bullet3/blob/master/examples/pybullet/examples/deformable_anchor.py">https://github.com/bulletphysics/bullet3/blob/master/examples/pybullet/examples/deformable_anchor.py</a></p></li>
+<li><p><a class="reference external" href="https://github.com/bulletphysics/bullet3/discussions/4088">https://github.com/bulletphysics/bullet3/discussions/4088</a></p></li>
+<li><p><a class="reference external" href="https://github.com/bulletphysics/bullet3/blob/7dee3436e747958e7088dfdcea0e4ae031ce619e/examples/pybullet/pybullet.c#L2280-L2326">https://github.com/bulletphysics/bullet3/blob/7dee3436e747958e7088dfdcea0e4ae031ce619e/examples/pybullet/pybullet.c#L2280-L2326</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="loading-from-urdf">
+<h2>Loading from URDF<a class="headerlink" href="#loading-from-urdf" title="Permalink to this heading"></a></h2>
+<p>This interface allows you to load objects directly from a URDF.
+The only required tag is as follows.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">loadURDF</span></code> (required), see the PyBullet documentation.</p></li>
+</ul>
+<p><em>Note</em>, for this object type there is no ROS communication available.
+Future work will include updated feature set for this object type.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="main_configuration.html" class="btn btn-neutral float-left" title="Main Configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="communication_with_ros.html" class="btn btn-neutral float-right" title="Communication with ROS" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Christopher E. Mower, Theodoros Stouraitis, Sethu Vijayakumar, University of Edinburgh.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

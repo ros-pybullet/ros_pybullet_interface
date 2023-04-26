@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Additional Features &mdash; ROS-PyBullet Interface  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Cite" href="cite.html" />
+    <link rel="prev" title="Communication with ROS" href="communication_with_ros.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ROS-PyBullet Interface
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main_configuration.html">Main Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="create_virtual_worlds.html">Create Virutal Worlds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="communication_with_ros.html">Communication with ROS</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Additional Features</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#gui-controls">GUI Controls</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#launch">Launch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#limitations-and-future-development">Limitations and future development</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#interpolation">Interpolation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ik-ros">ik_ros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#safe-robot">safe_robot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#custom-ros-tools">custom_ros_tools</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cite.html">Cite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="develop.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">Acknowledgements</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ROS-PyBullet Interface</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Additional Features</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="additional-features">
+<h1>Additional Features<a class="headerlink" href="#additional-features" title="Permalink to this heading"></a></h1>
+<section id="gui-controls">
+<h2>GUI Controls<a class="headerlink" href="#gui-controls" title="Permalink to this heading"></a></h2>
+<p>The GUI controls can be used to perform basic interactions with the interface.
+The following is an image of the GUI controls that you can expect to see when it is launched.</p>
+<a class="reference internal image-reference" href="_images/gui-controls.png"><img alt="Alternative text" src="_images/gui-controls.png" style="width: 400px;" /></a>
+<p>There are four buttons defined, and a text box. The effect of the buttons are as follows.</p>
+<ul class="simple">
+<li><p><em>Start</em>: starts the simulation clock.</p></li>
+<li><p><em>Step</em>: steps the simulation clock by the given sampling frequency specified in the <a class="reference internal" href="main_configuration.html#mainconfig"><span class="std std-ref">main configuration</span></a></p></li>
+<li><p><em>Stop</em>: stops/pauses the simulation clock.</p></li>
+<li><p><em>Send</em>: sends the robot to the initial configuration as specified in its configuration file. If the initial configuration is unpsecified then this defaults to zero.</p></li>
+</ul>
+<p>The text box displays the status of the simulation. If it is <code class="docutils literal notranslate"><span class="pre">1</span></code>, then the simulation is running. If it is <code class="docutils literal notranslate"><span class="pre">0</span></code> then the simulation is paused.
+Ultimately, what is displayed here is reporting the current value of the <code class="docutils literal notranslate"><span class="pre">rpbi/status</span></code> topic with type <code class="docutils literal notranslate"><span class="pre">std_msgs/Int64</span></code>.</p>
+<section id="launch">
+<h3>Launch<a class="headerlink" href="#launch" title="Permalink to this heading"></a></h3>
+<p>Add the following to your launch file.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;node</span><span class="w"> </span><span class="na">pkg=</span><span class="s">&quot;rpbi_utils&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;controls&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;rpbi_controls_node.py&quot;</span><span class="w"> </span><span class="na">output=</span><span class="s">&quot;screen&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;rosparam</span><span class="w"> </span><span class="na">param=</span><span class="s">&quot;config&quot;</span><span class="w"> </span><span class="na">file=</span><span class="s">&quot;path/to/config.yaml&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/node&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="configuration">
+<h3>Configuration<a class="headerlink" href="#configuration" title="Permalink to this heading"></a></h3>
+<p>The configuration for the GUI controls can be added to the <a class="reference internal" href="main_configuration.html#mainconfig"><span class="std std-ref">main yaml configuration</span></a>.
+An example is shown below.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">controls</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">robot_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ROBOT_NAME&quot;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">robot_name</span></code> tag should be the name of the robot as specified in the pybullet object configuration.
+If the configuration is not given, then the <em>Send</em> button will have no effect.</p>
+</section>
+<section id="limitations-and-future-development">
+<h3>Limitations and future development<a class="headerlink" href="#limitations-and-future-development" title="Permalink to this heading"></a></h3>
+<p>Currently, only a single robot is supported per node.
+If you want to control multiple robots then you will need to launch multiple control nodes.</p>
+<p>In the future we aim to re-implement the controls as an RQT pluggin. If you would like to contribute this please <a class="reference internal" href="develop.html#develop"><span class="std std-ref">submit a pull request</span></a>.</p>
+</section>
+</section>
+<section id="interpolation">
+<h2>Interpolation<a class="headerlink" href="#interpolation" title="Permalink to this heading"></a></h2>
+<p>The interpolation interface provides the functions to generate smooth trajectories
+based on a sequence of waypoints. Input is a 2D array of waypoints via a topic (default value is: <code class="docutils literal notranslate"><span class="pre">ros_pybullet_interface/waypt_traj</span></code>).
+Output is streamed as TF in /tf. The waypoints (input) are provided as a 2D [<code class="docutils literal notranslate"><span class="pre">Float64MultiArray</span></code>]
+via a topic. The first row of the 2D array holds the relative time of the waypoints
+and the rest of the rows are the dimensions of the waypoints. The columns of the 2D array
+are the number of waypoints. The interpolation is typically used in the task space (can be modified to be used in the configuration space )
+and provides linear, cubic interpolation for 1D, for euler angles (as 3 independent axis), for axis angle (1D around a specified axis),
+and also for quaternions.</p>
+<p>The process steps done in the node are:</p>
+<ol class="arabic simple">
+<li><p>Input process</p>
+<ol class="loweralpha simple">
+<li><p>Read input (2D array) from topic <code class="docutils literal notranslate"><span class="pre">ros_pybullet_interface/waypt_traj</span></code> (it is suggested that this topic name is remaped)</p></li>
+<li><p>Input is a sequence of waypoints.</p></li>
+</ol>
+</li>
+<li><p>Interpolation process</p>
+<ol class="loweralpha simple">
+<li><p>Interpolate each independent dimension separately and if there are coupled dimensions (e.g. quaternions) interpolate them jointly.</p></li>
+<li><p>Sample these interpolated functions with a frequency specified by <code class="docutils literal notranslate"><span class="pre">[inter_dt]</span></code> (see details on the parameter below)</p></li>
+<li><p>Store these samples in a list</p></li>
+</ol>
+</li>
+<li><p>Output process</p>
+<ol class="loweralpha simple">
+<li><p>At a given frequency, specified by <code class="docutils literal notranslate"><span class="pre">[consuming_freq]</span></code>, extract (and delete) the first from the list.</p></li>
+<li><p>Publish the extracted sample as TF to /tf with <code class="docutils literal notranslate"><span class="pre">[header_frame_id]</span></code> and <code class="docutils literal notranslate"><span class="pre">[msg_child_frame_id]</span></code> as specified below.</p></li>
+</ol>
+</li>
+</ol>
+<p>The interpolation node requires the following parameters to be set in the .launch file.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">[traj_config]</span></code> [<code class="docutils literal notranslate"><span class="pre">str</span></code>] (required), specifies a yaml file which holds a number of parameters used for the interpolation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[consuming_freq]</span></code> [<code class="docutils literal notranslate"><span class="pre">float</span></code>] (required), specifies the frequency of publishing the output (TF). In other words, how often a TF sample is published from the interpolated data.</p></li>
+</ul>
+<p>input related parameters</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">[motion_dimensions][number]</span></code> [<code class="docutils literal notranslate"><span class="pre">int</span></code>] (required), specifies the number of dimensions of the waypoints.</p></li>
+</ul>
+<p>input related parameters (linear task space dimensions)</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">[motion_dimensions][trans][translation_x]</span></code> [<code class="docutils literal notranslate"><span class="pre">float</span></code>] (optional), specifies a fixed value of the x dimension of the task motion.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[motion_dimensions][trans][translation_x_index]</span></code> [<code class="docutils literal notranslate"><span class="pre">int</span></code>] (optional), used if <code class="docutils literal notranslate"><span class="pre">translation_x</span></code> is empty and the index of the row where the x variable is held in the 2D array with the waypoints.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[motion_dimensions][trans][translation_y]</span></code> [<code class="docutils literal notranslate"><span class="pre">float</span></code>] (optional), specifies a fixed value of the y dimension of the task motion.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[motion_dimensions][trans][translation_y_index]</span></code> [<code class="docutils literal notranslate"><span class="pre">int</span></code>] (optional), used if <code class="docutils literal notranslate"><span class="pre">translation_y</span></code> is empty and the index of the row where the y variable is held in the 2D array with the waypoints.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[motion_dimensions][trans][translation_z]</span></code> [<code class="docutils literal notranslate"><span class="pre">float</span></code>] (optional), specifies a fixed value of the z dimension of the task motion.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[motion_dimensions][trans][translation_z_index]</span></code> [<code class="docutils literal notranslate"><span class="pre">int</span></code>] (optional), used if <code class="docutils literal notranslate"><span class="pre">translation_z</span></code> is empty and the index of the row where the z variable is held in the 2D array with the waypoints.</p></li>
+</ul>
+<p>input related parameters (angular task space dimensions)</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">[motion_dimensions][rotation][rotation_repr]</span></code> [<code class="docutils literal notranslate"><span class="pre">str</span></code>] (optional),  options are: none, theta, quat, euler and it specifies the type of representation of the angular motion.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[motion_dimensions][rotation][rotation_vec_index]</span></code> [<code class="docutils literal notranslate"><span class="pre">list[int]</span></code>] with 1 (for theta) or 2 (for euler and quat) elements (required if theta or euler or quat), indicates the indexes of the row where the angular variables are held in the 2D array with the waypoints.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[motion_dimensions][rotation][rotation_vec]</span></code> [<code class="docutils literal notranslate"><span class="pre">list[int]</span></code>] with 3 elements (required if theta or none), specifies a fixed axis of rotation. Needs to be a normalized vector.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[motion_dimensions][rotation][rotation_angle]</span></code> [<code class="docutils literal notranslate"><span class="pre">float</span></code>] (required if none), a fixed value of the angle along the fixed axis of rotation of the task motion.</p></li>
+</ul>
+<p>interpolation related parameters</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">[interpolation][nochange_window_length]</span></code> [<code class="docutils literal notranslate"><span class="pre">int</span></code>] (required), default value is 1. Advanced: specifies a window of samples that cannot be changed when new waypoints are received. It is used to ensure smoothness if the waypoints are changed on the fly.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[interpolation][use_interpolation]</span></code> [<code class="docutils literal notranslate"><span class="pre">bool</span></code>] (required), specifies whether the waypoints should be interpolated or not.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[interpolation][inter_dt]</span></code> [<code class="docutils literal notranslate"><span class="pre">float</span></code>] (required), specifies the dt between the interpolated points. In other words, frequency of the interpolation samples.</p></li>
+</ul>
+<p>output related parameters</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">[communication][publisher][header_frame_id]</span></code> [<code class="docutils literal notranslate"><span class="pre">str</span></code>] (required), specifies header_frame_id of the TF streamed in /tf.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[communication][publisher][msg_child_frame_id]</span></code> [<code class="docutils literal notranslate"><span class="pre">str</span></code>] (required), specifies msg_child_frame_id of the TF streamed in /tf.</p></li>
+</ul>
+</section>
+<section id="ik-ros">
+<h2>ik_ros<a class="headerlink" href="#ik-ros" title="Permalink to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/ik_ros_sys_overview.png"><img alt="Alternative text" src="_images/ik_ros_sys_overview.png" style="width: 600px;" /></a>
+<p>The <a class="reference external" href="https://github.com/ros-pybullet/ik_ros">ik_ros</a> package is a standardized interface for inverse kinematics using ROS.
+Input data (e.g. end-effector task space goals) are directed to a problem setup node, that collects the information into a single message.
+The setup node then publishes a problem message at a given frequency.
+A solver node, that interfaces via a standardized plugin to an IK solver, then solves the problem and publishes the target joint state.</p>
+</section>
+<section id="safe-robot">
+<h2>safe_robot<a class="headerlink" href="#safe-robot" title="Permalink to this heading"></a></h2>
+<p>A low-level <a class="reference external" href="https://github.com/ros-pybullet/safe_robot">ROS package</a> for the safe operation of robots.
+Easily setup with a single launch file.
+The <code class="docutils literal notranslate"><span class="pre">safe_robot_node.py</span></code> acts as a remapper.
+Target joint states are passed through several safety checks, if safe then the command is sent to the robot, otherwise they are prevented.
+Possible checks</p>
+<ul class="simple">
+<li><p>joint position limits</p></li>
+<li><p>joint velocity limits</p></li>
+<li><p>end-effector/link box limits</p></li>
+<li><p>self-collision check</p></li>
+</ul>
+</section>
+<section id="custom-ros-tools">
+<h2>custom_ros_tools<a class="headerlink" href="#custom-ros-tools" title="Permalink to this heading"></a></h2>
+<p>The <a class="reference external" href="https://github.com/ros-pybullet/custom_ros_tools">custom_ros_tools</a> package provides a collection of generic useful tools for ROS.
+The package is extensively used in the ROS-PyBullet Interface.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="communication_with_ros.html" class="btn btn-neutral float-left" title="Communication with ROS" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cite.html" class="btn btn-neutral float-right" title="Cite" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Christopher E. Mower, Theodoros Stouraitis, Sethu Vijayakumar, University of Edinburgh.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
